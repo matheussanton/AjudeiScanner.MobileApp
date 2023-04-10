@@ -1,5 +1,14 @@
 {
   "expo": {
+    "plugins": [
+      [
+        "expo-barcode-scanner",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera.",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access microphone."
+        }
+      ]
+    ],
     "name": "AjudeiScanner.MobileApp",
     "slug": "AjudeiScanner.MobileApp",
     "version": "1.0.0",
