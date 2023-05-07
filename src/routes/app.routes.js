@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Scanner from '../pages/Scanner/Index';
+import Home from '../pages/Home/Index';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -14,10 +15,12 @@ function AppRoutes() {
 
                     if (route.name === 'Home') {
                         iconName = focused
-                            ? 'ios-information-circle'
-                            : 'ios-information-circle-outline';
+                            ? 'ios-home'
+                            : 'ios-home-outline';
                     } else if (route.name === 'Settings') {
-                        iconName = focused ? 'ios-list' : 'ios-list-outline';
+                        iconName = focused ? 'ios-settings' : 'ios-settings-outline';
+                    } else if (route.name === 'Scanner') {
+                        iconName = focused ? 'ios-scan' : 'ios-scan-outline';
                     }
 
                     // You can return any component that you like here!
@@ -27,8 +30,8 @@ function AppRoutes() {
                 tabBarInactiveTintColor: 'gray',
             })}
         >
+            <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Scanner" component={Scanner} />
-            <Tab.Screen name="Home" component={Scanner} />
             <Tab.Screen name="Settings" component={Scanner} />
             {/* <Tab.Screen name="Scanner" component={SettingsScreen} />
             <Tab.Screen name="Settings" component={SettingsScreen} /> */}
