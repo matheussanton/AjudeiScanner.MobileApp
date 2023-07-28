@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native'
 import AppRoutes from './src/routes/app.routes'
 
+import UserProvider from './src/contexts/user'
 import CuponsProvider from './src/contexts/cupons'
+import LoadingProvider from './src/contexts/loading'
+
+import Toast from 'react-native-toast-message';
+
 
 export default function App() {
+
   return (
-    <NavigationContainer>
-      {/* <AuthProvider> */}
-      {/* <StatusBar backgroundColor="#1d1d2e" barStyle="light-content" translucent={false} /> */}
-      <CuponsProvider>
-        <AppRoutes />
-      </CuponsProvider>
-      {/* </AuthProvider> */}
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        <LoadingProvider>
+          <UserProvider>
+            <CuponsProvider>
+              <AppRoutes />
+              <Toast />
+            </CuponsProvider>
+          </UserProvider>
+        </LoadingProvider>
+      </NavigationContainer>
+    </>
   );
 }

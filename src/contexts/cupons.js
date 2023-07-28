@@ -1,55 +1,65 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, useContext, createContext } from 'react';
+import { LoadingContext } from './loading';
+
 
 export const CuponsContext = createContext();
 
-var devItems = [
-    // {
-    //     id: '1',
-    //     name: "Item 1",
-    // },
-    // {
-    //     id: '2',
-    //     name: "Item 2",
-    // },
-    // {
-    //     id: '3',
-    //     name: "Item 3",
-    // },
-    // {
-    //     id: '4',
-    //     name: "Item 4",
-    // }
-];
 
 function CuponsProvider({ children }) {
 
-    const [initItems, setInitItems] = useState([]);
+    var { setLoading } = useContext(LoadingContext);
+
+    const [contextItems, setContextItems] = useState([]);
+    const [selectedItems, setSelectedItems] = useState([]);
+
+    const sleep = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    };
 
     function addCupom(id,
         code,
         date,
         amount,
         registrationNumber) {
-        setInitItems([...initItems, {
+        setContextItems([...contextItems, {
             id,
             code,
             date,
             amount,
             registrationNumber
         }]);
-        // devItems.push({
-        //     id: id,
-        //     name: name,
-        // });
     }
 
-    function removeCupom(id) {
-        setInitItems(initItems.filter((item) => item.id !== id));
+    function getContextItems() {
+        return contextItems;
+    }
+
+    async function removeCupom(id) {
+        setLoading(true);
+        await sleep(500).then(() => { setLoading(false) });
+        setContextItems(contextItems.filter((item) => item.id !== id));
+    }
+
+    function addSelectedItem(id) {
+        setSelectedItems([...selectedItems, id]);
+    }
+
+    function removeSelectedItem(id) {
+        setSelectedItems(selectedItems.filter((item) => item !== id));
     }
 
 
     return (
-        <CuponsContext.Provider value={{ initItems, addCupom, removeCupom, setInitItems }}>
+        <CuponsContext.Provider value={{
+            contextItems,
+            addCupom,
+            removeCupom,
+            setContextItems,
+            getContextItems,
+            selectedItems,
+            addSelectedItem,
+            removeSelectedItem
+        }}>
             {children}
         </CuponsContext.Provider>
     );

@@ -9,3 +9,11 @@ export function stringLastFour(string) {
 function reverseString(str) {
     return str.split("").reverse().join("");
 }
+
+export function parseDateFormat(date) {
+    let data = date.substring(0, 8);
+
+    data = `${data.substring(0, 4)}-${data.substring(4, 6)}-${data.substring(6, 8)}`
+
+    return data;
+}
